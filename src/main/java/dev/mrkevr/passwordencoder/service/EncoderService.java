@@ -1,15 +1,22 @@
 package dev.mrkevr.passwordencoder.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.BeanFactoryAnnotationUtils;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
 
 import dev.mrkevr.passwordencoder.encoder.Encoder;
-import dev.mrkevr.passwordencoder.encoder.NoSuchEncoderException;
+import dev.mrkevr.passwordencoder.exception.NoSuchEncoderException;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class EncoderService {
+	
+	private final List<Encoder> encoders;
 
 	public String encode(String encoderQualifier, String rawString) {
 		Encoder encoder = this.getEncoderByQualifier(encoderQualifier);
@@ -19,6 +26,10 @@ public class EncoderService {
 	public Boolean match(String encoderQualifier, String candidateString, String encodedString) {
 		Encoder encoder = this.getEncoderByQualifier(encoderQualifier);
 		return encoder.match(candidateString, encodedString);
+	}
+	
+	public List<String> getEncoders(){
+		return encoders.stream().map(e -> e.getEncoderName()).collect(Collectors.toList());
 	}
 	
 	private Encoder getEncoderByQualifier(String encoderQualifier) {
@@ -32,9 +43,7 @@ public class EncoderService {
 		} catch (NoSuchBeanDefinitionException ex) {
 			throw new NoSuchEncoderException(encoderQualifier);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e.getMessage());
 		}
-		
-		return null;
 	}
 }

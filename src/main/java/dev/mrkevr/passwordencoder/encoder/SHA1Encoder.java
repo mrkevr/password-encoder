@@ -13,8 +13,12 @@ public class SHA1Encoder implements Encoder {
 
 	@Override
 	public Boolean match(String candidateString, String encodedString) {
-		candidateString = DigestUtils.sha1Hex(candidateString).toUpperCase();
-		encodedString = encodedString.toUpperCase();
-		return candidateString.equals(encodedString);
+		candidateString = DigestUtils.sha1Hex(candidateString);
+		return candidateString.equalsIgnoreCase(encodedString);
+	}
+
+	@Override
+	public String getEncoderName() {
+		return "sha1";
 	}
 }

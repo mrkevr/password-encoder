@@ -1,4 +1,4 @@
-package dev.mrkevr.passwordencoder.encoder;
+package dev.mrkevr.passwordencoder.exception;
 
 public class NoSuchEncoderException extends RuntimeException {
 

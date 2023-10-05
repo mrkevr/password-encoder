@@ -22,6 +22,11 @@ public class EncoderController {
 
 	private final EncoderService encoderService;
 	
+	@GetMapping("/list")
+	public ResponseEntity<?> encode() {
+		return ResponseEntity.ok(encoderService.getEncoders());
+	}
+	
 	@GetMapping("/encode")
 	public ResponseEntity<?> encode(
 			@RequestParam(name = "raw", required = true) String raw,
@@ -30,12 +35,12 @@ public class EncoderController {
 		String encoded = encoderService.encode(encoder, raw);
 		
 		HttpResponse response = HttpResponse.builder()
-			.timeStamp(LocalDateTime.now())
-			.status(HttpStatus.OK.value())
-			.encoder(encoder.toUpperCase())
-			.body(encoded)
-			.build();
-			
+				.timeStamp(LocalDateTime.now())
+				.status(HttpStatus.OK.value())
+				.encoder(encoder.toUpperCase())
+				.body(encoded)
+				.build();
+				
 		return ResponseEntity.ok(response);
 	}
 	

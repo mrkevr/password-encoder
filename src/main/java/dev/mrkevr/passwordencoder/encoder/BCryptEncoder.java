@@ -15,4 +15,9 @@ public class BCryptEncoder implements Encoder {
 	public Boolean match(String candidateString, String encodedString) {
 		return BCrypt.checkpw(candidateString, encodedString);
 	}
+
+	@Override
+	public String getEncoderName() {
+		return "bcrypt";
+	}
 }

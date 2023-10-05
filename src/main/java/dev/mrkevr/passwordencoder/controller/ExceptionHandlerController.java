@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import dev.mrkevr.passwordencoder.dto.HttpErrorResponse;
-import dev.mrkevr.passwordencoder.encoder.NoSuchEncoderException;
+import dev.mrkevr.passwordencoder.exception.NoSuchEncoderException;
 
 @RestControllerAdvice
 public class ExceptionHandlerController {
